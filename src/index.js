@@ -6,7 +6,7 @@ canvas.height = 576;
 
 c.fillRect(0, 0, canvas.width, canvas.height);
 
-const gravity = 0.7;
+const gravity = 0.5;
 const background = new Sprite({
     position: {
         x: 0,
@@ -34,9 +34,12 @@ const player = new Fighter({
         y: 0
     },
     color: 'blue',
+    imageSrc: './img/samuraiMack/Idle.png',
+    scale: 2.5,
+    framesMax: 8,
     offset: {
-        x: 0,
-        y: 0
+        x: 215,
+        y: 157
     }
 });
 
@@ -50,9 +53,12 @@ const enemy = new Fighter({
         y: 0
     },
     color: 'red',
+    imageSrc: './img/kenji/Idle.png',
+    scale: 2.5,
+    framesMax: 4,
     offset: {
         x: -50,
-        y: 0
+        y: 171
     }
 });
 
@@ -87,16 +93,32 @@ function animate() {
 
     // player movement
     if (keys.q.pressed && player.lastKey === 'q') {
-        player.velocity.x = -5;
+        if (player.position.x + player.velocity.x > 0) {
+            player.velocity.x = -5;
+        } else {
+            player.velocity.x = 0;
+        }
     } else if (keys.d.pressed && player.lastKey === 'd') {
-        player.velocity.x = 5;
+        if (player.position.x + player.width + player.velocity.x <= canvas.width) {
+            player.velocity.x = 5;
+        } else {
+            player.velocity.x = 0;
+        }
     }
 
     // enemy movement
     if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
-        enemy.velocity.x = -5;
+        if (enemy.position.x + enemy.velocity.x > 0) {
+            enemy.velocity.x = -5;
+        } else {
+            enemy.velocity.x = 0;
+        }
     } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
-        enemy.velocity.x = 5;
+        if (enemy.position.x + enemy.width + enemy.velocity.x <= canvas.width) {
+            enemy.velocity.x = 5;
+        } else {
+            enemy.velocity.x = 0;
+        }
     }
 
     // detect for collision
@@ -137,7 +159,7 @@ window.addEventListener('keydown', (event) => {
             player.lastKey = 'q';
             break;
         case 'z':
-            if (player.position.y + player.height + player.velocity.y >= canvas.height - 100) {
+            if (player.position.y + player.height + player.velocity.y >= canvas.height - backgroundMarginBottom) {
                 player.velocity.y = -15;
             }
             break;
@@ -154,7 +176,7 @@ window.addEventListener('keydown', (event) => {
             enemy.lastKey = 'ArrowLeft';
             break;
         case 'ArrowUp':
-            if (enemy.position.y + enemy.height + enemy.velocity.y >= canvas.height - 100) {
+            if (enemy.position.y + enemy.height + enemy.velocity.y >= canvas.height - backgroundMarginBottom) {
                 enemy.velocity.y = -15;
             }
             break;
