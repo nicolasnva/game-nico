@@ -22,7 +22,7 @@ const shop = new Sprite({
     imageSrc: './img/shop.png',
     scale: 2.4,
     framesMax: 6
-})
+});
 
 const player = new Fighter({
     position: {
@@ -69,7 +69,7 @@ const keys = {
     ArrowLeft: {
         pressed: false
     }
-}
+};
 
 decreaseTimer();
 
@@ -137,8 +137,8 @@ window.addEventListener('keydown', (event) => {
             player.lastKey = 'q';
             break;
         case 'z':
-            if (player.position.y + player.height + player.velocity.y >= canvas.height) {
-                player.velocity.y = -20;
+            if (player.position.y + player.height + player.velocity.y >= canvas.height - 100) {
+                player.velocity.y = -15;
             }
             break;
         case 'f':
@@ -154,8 +154,8 @@ window.addEventListener('keydown', (event) => {
             enemy.lastKey = 'ArrowLeft';
             break;
         case 'ArrowUp':
-            if (enemy.position.y + enemy.height + enemy.velocity.y >= canvas.height) {
-                enemy.velocity.y = -20;
+            if (enemy.position.y + enemy.height + enemy.velocity.y >= canvas.height - 100) {
+                enemy.velocity.y = -15;
             }
             break;
         case '0':
@@ -165,7 +165,7 @@ window.addEventListener('keydown', (event) => {
         default:
             break;
     }
-})
+});
 
 window.addEventListener('keyup', (event) => {
     switch (event.key) {
@@ -186,4 +186,4 @@ window.addEventListener('keyup', (event) => {
         default:
             break;
     }
-})
+});
