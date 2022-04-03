@@ -1,0 +1,19 @@
+{
+  "name": "game-nico",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicolasnva/game-nico.git"
+  },
+  "author": "Nicolas V",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nicolasnva/game-nico/issues"
+  },
+  "homepage": "https://github.com/nicolasnva/game-nico#readme"
+}
