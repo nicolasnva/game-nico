@@ -1,20 +1,102 @@
 <html>
 
+<head>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
 <body>
-    <canvas></canvas>
+    <!-- red container div -->
+    <div style="position: relative; display: inline-block;">
+        <!-- smaller red container div -->
+        <div style="
+            position: absolute; 
+            display: flex; 
+            width: 100%; 
+            align-items: center; 
+            padding: 20px;
+        ">
+            <!-- player health -->
+            <div style="position: relative; height: 30px; width: 100%; display: flex; justify-content: flex-end;">
+                <div style="
+                    background-color: yellow; 
+                    height: 30px;
+                    width: 100%;
+                ">
+                </div>
+                <div id="playerHealth" style="
+                        position: absolute; 
+                        background-color: blue; 
+                        top: 0; 
+                        right: 0; 
+                        bottom: 0; 
+                        width: 100%;
+                ">
+                </div>
+            </div>
+
+            <!-- timer -->
+            <div id="timer" style="
+                background-color: green; 
+                width: 100px; 
+                height: 100px; 
+                flex-shrink: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            ">
+                60
+            </div>
+
+            <!-- enemy health -->
+            <div style="position: relative; height: 30px; width: 100%;">
+                <div style="
+                    background-color: yellow; 
+                    height: 30px;
+                ">
+                </div>
+                <div id="enemyHealth" style="
+                    position: absolute; 
+                    background-color: red; 
+                    top: 0; 
+                    right: 0; 
+                    bottom: 0;
+                    left: 0;
+                ">
+                </div>
+            </div>
+        </div>
+        <div id="endText" style="
+            position: absolute; 
+            color: white;
+            align-items: center;
+            justify-content: center;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+        "></div>
+        <canvas></canvas>
+    </div>
     <p>
-        Bienvenue sur ce super jeu développé par un talentueux développeur nommé Nicoco.<br>
+        Bienvenue sur ce prototype de jeu de combat.<br>
         <br>
         <b>Contrôles :</b><br>
-        Q => Se déplacer à gauche<br>
-        D => Se déplacer à droite<br>
-        Z => Sauter vers l'infini et l'au-delà !<br>
+        Joueur 1<br>
+        - Q => Se déplacer à gauche<br>
+        - D => Se déplacer à droite<br>
+        - Z => Sauter<br>
+        - F => Attaquer<br>
         <br>
-        <b>Astuces :</b><br>
-        Bendada<br>
-        Pouloupouga<br>
-        Turbopigeon<br>
-        Lebron est un nullos<br>
+        Joueur 2<br>
+        - Flèche Gauche => Se déplacer à gauche<br>
+        - Flèche Droite => Se déplacer à droite<br>
+        - Flèche Haut => Sauter<br>
+        - 0 du pavé numérique => Attaquer<br>
+        <br>
     </p>
     <script src="index.js"></script>
 </body>
