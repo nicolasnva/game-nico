@@ -83,7 +83,7 @@ const player = new Fighter({
         width: 150,
         height: 100
     },
-    attackDamage: 25
+    attackDamage: 20
 });
 
 const enemy = new Fighter({
