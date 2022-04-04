@@ -57,7 +57,8 @@ class Fighter extends Sprite {
         framesMax = 1,
         offset = { x: 0, y: 0 },
         sprites,
-        attackBox = { offset: {}, width: undefined, height: undefined }
+        attackBox = { offset: {}, width: undefined, height: undefined },
+        attackDamage = 10
     }) {
         super({
             position,
@@ -88,6 +89,8 @@ class Fighter extends Sprite {
         this.framesHold = 25;
         this.sprites = sprites;
         this.dead = false;
+        this.wasHit = false;
+        this.attackDamage = attackDamage;
 
         for (const sprite in this.sprites) {
             sprites[sprite].image = new Image();
@@ -130,8 +133,14 @@ class Fighter extends Sprite {
         }, 1000);
     }
 
-    takeHit() {
-        this.health -= 20;
+    takeHit(fighter) {
+        if (!this.wasHit) {
+            this.health -= fighter.attackDamage;
+            this.wasHit = true;
+            setTimeout(() => {
+                this.wasHit = false;
+            }, 400);
+        }
 
         if (this.health <= 0) {
             this.switchSprite('death');
@@ -141,6 +150,16 @@ class Fighter extends Sprite {
     }
 
     switchSprite(sprite) {
+        switch (sprite) {
+            case 'death':
+                if (this.image !== this.sprites.death.image) {
+                    this.image = this.sprites.death.image;
+                    this.framesMax = this.sprites.death.framesMax;
+                    this.framesCurrent = 0;
+                }
+                break;
+        }
+
         if (this.image === this.sprites.death.image) {
             if (this.framesCurrent === this.sprites.death.framesMax - 1) {
                 this.dead = true;
@@ -201,13 +220,6 @@ class Fighter extends Sprite {
                 if (this.image !== this.sprites.takeHit.image) {
                     this.image = this.sprites.takeHit.image;
                     this.framesMax = this.sprites.takeHit.framesMax;
-                    this.framesCurrent = 0;
-                }
-                break;
-            case 'death':
-                if (this.image !== this.sprites.death.image) {
-                    this.image = this.sprites.death.image;
-                    this.framesMax = this.sprites.death.framesMax;
                     this.framesCurrent = 0;
                 }
                 break;

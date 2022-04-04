@@ -82,7 +82,8 @@ const player = new Fighter({
         },
         width: 150,
         height: 100
-    }
+    },
+    attackDamage: 25
 });
 
 const enemy = new Fighter({
@@ -232,8 +233,8 @@ function animate() {
         player.isAttacking &&
         player.framesCurrent === 4
     ) {
-        enemy.takeHit();
         player.isAttacking = false;
+        enemy.takeHit(player);
         document.querySelector('#enemyHealth').style.width = enemy.health + '%';
     }
 
@@ -248,8 +249,8 @@ function animate() {
         enemy.isAttacking &&
         enemy.framesCurrent === 2
     ) {
-        player.takeHit()
         enemy.isAttacking = false;
+        player.takeHit(enemy)
         document.querySelector('#playerHealth').style.width = player.health + '%';
     }
 
