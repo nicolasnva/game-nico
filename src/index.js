@@ -65,6 +65,14 @@ const player = new Fighter({
         attack1: {
             imageSrc: './img/samuraiMack/Attack1.png',
             framesMax: 6
+        },
+        takeHit: {
+            imageSrc: './img/samuraiMack/Take hit - white silhouette.png',
+            framesMax: 4
+        },
+        death: {
+            imageSrc: './img/samuraiMack/Death.png',
+            framesMax: 6
         }
     },
     attackBox: {
@@ -118,6 +126,14 @@ const enemy = new Fighter({
         attack1: {
             imageSrc: './img/kenji/Attack1.png',
             framesMax: 4
+        },
+        takeHit: {
+            imageSrc: './img/kenji/Take hit.png',
+            framesMax: 3
+        },
+        death: {
+            imageSrc: './img/kenji/Death.png',
+            framesMax: 7
         }
     },
     attackBox: {
@@ -216,18 +232,30 @@ function animate() {
         player.isAttacking &&
         player.framesCurrent === 4
     ) {
+        enemy.takeHit();
         player.isAttacking = false;
-        enemy.health -= 20;
         document.querySelector('#enemyHealth').style.width = enemy.health + '%';
     }
 
+    // if player misses
+    if (player.isAttacking && player.framesCurrent === 4) {
+        player.isAttacking = false;
+    }
+
+    // this is where our player gets hit
     if (
         rectangularCollision({ rectangle1: enemy, rectangle2: player }) &&
-        enemy.isAttacking
+        enemy.isAttacking &&
+        enemy.framesCurrent === 2
     ) {
+        player.takeHit()
         enemy.isAttacking = false;
-        player.health -= 20;
         document.querySelector('#playerHealth').style.width = player.health + '%';
+    }
+
+    // if enemy misses
+    if (enemy.isAttacking && enemy.framesCurrent === 2) {
+        enemy.isAttacking = false;
     }
 
     // end game based on health
@@ -239,43 +267,47 @@ function animate() {
 animate();
 
 window.addEventListener('keydown', (event) => {
-    switch (event.key) {
-        case 'd':
-            keys.d.pressed = true;
-            player.lastKey = 'd';
-            break;
-        case 'q':
-            keys.q.pressed = true;
-            player.lastKey = 'q';
-            break;
-        case 'z':
-            if (player.position.y + player.height + player.velocity.y >= canvas.height - backgroundMarginBottom) {
-                player.velocity.y = -10;
-            }
-            break;
-        case 'f':
-            player.attack();
-            break;
+    if (!player.dead) {
 
-        case 'ArrowRight':
-            keys.ArrowRight.pressed = true;
-            enemy.lastKey = 'ArrowRight';
-            break;
-        case 'ArrowLeft':
-            keys.ArrowLeft.pressed = true;
-            enemy.lastKey = 'ArrowLeft';
-            break;
-        case 'ArrowUp':
-            if (enemy.position.y + enemy.height + enemy.velocity.y >= canvas.height - backgroundMarginBottom) {
-                enemy.velocity.y = -10;
-            }
-            break;
-        case '0':
-            enemy.attack();
-            break;
+        switch (event.key) {
+            case 'd':
+                keys.d.pressed = true;
+                player.lastKey = 'd';
+                break;
+            case 'q':
+                keys.q.pressed = true;
+                player.lastKey = 'q';
+                break;
+            case 'z':
+                if (player.position.y + player.height + player.velocity.y >= canvas.height - backgroundMarginBottom) {
+                    player.velocity.y = -10;
+                }
+                break;
+            case 'f':
+                player.attack();
+                break;
+        }
+    }
 
-        default:
-            break;
+    if (!enemy.dead) {
+        switch (event.key) {
+            case 'ArrowRight':
+                keys.ArrowRight.pressed = true;
+                enemy.lastKey = 'ArrowRight';
+                break;
+            case 'ArrowLeft':
+                keys.ArrowLeft.pressed = true;
+                enemy.lastKey = 'ArrowLeft';
+                break;
+            case 'ArrowUp':
+                if (enemy.position.y + enemy.height + enemy.velocity.y >= canvas.height - backgroundMarginBottom) {
+                    enemy.velocity.y = -10;
+                }
+                break;
+            case '0':
+                enemy.attack();
+                break;
+        }
     }
 });
 
