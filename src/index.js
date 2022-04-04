@@ -67,7 +67,7 @@ const player = new Fighter({
             framesMax: 6
         },
         takeHit: {
-            imageSrc: './img/samuraiMack/Take hit - white silhouette.png',
+            imageSrc: './img/samuraiMack/TakeHitWhiteSilhouette.png',
             framesMax: 4
         },
         death: {
@@ -128,7 +128,7 @@ const enemy = new Fighter({
             framesMax: 4
         },
         takeHit: {
-            imageSrc: './img/kenji/Take hit.png',
+            imageSrc: './img/kenji/TakeHit.png',
             framesMax: 3
         },
         death: {
@@ -268,7 +268,6 @@ animate();
 
 window.addEventListener('keydown', (event) => {
     if (!player.dead) {
-
         switch (event.key) {
             case 'd':
                 keys.d.pressed = true;
